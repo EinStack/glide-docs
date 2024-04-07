@@ -1,0 +1,72 @@
+---
+title: 'Routers'
+description: 'Control Your API Calls'
+---
+
+## Introduction
+
+Routers are a core concept in Glide. They are most easily thought of a pool of models that execute predefined logic on your API calls.
+There are more details on each router below but first let's look at a simple example.
+
+## Example: Deploy a Resilience Router
+
+A Resilience Router provides failover logic should a target model not be available. Below is a router called `my-chat-router`.
+'my-chat-router' is defined as a `language` router which accesses the `/chat` endpoints for supported providers. Additionally, we've specified this router to
+have a `priority` strategy which implements failover logic.
+
+This router will first try Openai (default model: `gpt-3.5-turbo`) once the router token budget has been drawn down (more info below) the router will failover to
+an Azure OpenAI deployment.
+
+Simple as that! Below we will cover each router in detail.
+
+```yaml
+routers:
+  language:
+    - id: my-chat-router
+      strategy: priority # round-robin, weighted-round-robin, least-latency, priority, etc.
+      models:
+        - id: primary
+          openai:
+            api_key: "XXXXXXXXX"
+        - id: secondary
+          azureopenai:
+            api_key: "XXXXXX"
+            model: "glide-GPT-35"
+            base_url: "https://mydeployment.openai.azure.com/"
+```
+
+## Priority Router
+
+Unlike other LLM routers, the failover router employs a token bucket based failover strategy to reduce the latency on primary model failure. When a failure occurs, the router directs the API call to the secondary model instead of retrying the primary. **The entire service instance keeps track of the number of failures for a specific model.** Once that number surpasses a certain threshold, the model is "disqualified" from serving requests for a temporary period. This proactive approach involves removing the problematic model from the pool as soon as it experiences issues, ensuring that subsequent requests are handled by healthy models only, significantly improving latency during failover compared to alternative methods.
+
+The router comes with a handy and flexible abstraction called error budget. Error budget is a number of errors you allow to tolerate before calling the model unhealthy and is defined in errors/second. As a final measure the router employs retries with backoff. This is done explicitly only when we have no other choice - such as all configured models are down.
+
+## Least Latency Router
+
+This router selects the model with the lowest average latency over time. If the least latency model becomes unhealthy, it will pick the second the best, etc.
+Since we don't know the true distribution of model latencies, we attempt to estimate it and keep it updated over time. Over time, old latency data is weighted lower and eventually dropped from the average latency calculation.
+This ensures latencies are constantly updated.
+
+## Round-Robin Router
+
+Round-robin routing iterates through a list of models sending the call until a `200` response is returned. This differs from priority as there is no token bucket to track api health across the instance.
+
+## Weighted Round-Robin Router
+
+Weighted round-robin sends API traffic proportional to the weight assigned in the `config.yaml`.
+
+In the below example 80% of traffic will be served to Model A with 10% sent each to Model B and Model C.
+
+```yaml
+Model A: 0.8
+Model B: 0.1
+Model C: 0.1
+```
+
+If Model A is unhealthy the traffic will be split equally between Model B and Model C. Once Model A is healthy again, the original default weights will be implemented.
+
+```yaml
+Model A: 0.0 # unhealthy
+Model B: 0.5
+Model C: 0.5
+```

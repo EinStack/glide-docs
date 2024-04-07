@@ -1,0 +1,84 @@
+---
+title: Introduction
+description: 'Welcome to the home of Glide - The Cloud Native LLM Gateway'
+---
+
+## 🐦 What is Glide?
+
+Glide is a cloud-native LLM gateway, delivering high-performance LLMOps in a lightweight package.
+Glide provides a simplified way to build application resilience, reduce latency, and manage API keys among many other features.
+
+## Install and Deploy 👇
+
+#### Setup Config File
+
+The initial phase in deploying Glide involves setting up your configuration file in the project root. For the basic setup, it is essential to have at least one pool with a minimum of one model. 
+```yaml
+routers:
+  language:
+    - id: my-chat-router
+      strategy: priority
+      models:
+        - id: primary
+          openai:
+            api_key: "XXXXXXXXX"
+```
+
+
+#### Deployment
+
+Currently the only supported deployment is via container.
+
+#### Docker
+
+1. **Install Git:**
+   Ensure that Git is installed on your machine. You can download it from [Git's official website](https://git-scm.com/).
+
+2. **Clone the Repository:**
+   Open a terminal or command prompt and paste the code below:
+
+   ```bash
+   git clone https://github.com/EinStack/glide.git
+   ```
+
+3. **Build Docker Image:**
+
+  Create a Dockerfile in the project root. Below is a sample.
+
+    ```Dockerfile
+    # syntax=docker/dockerfile:1
+
+  FROM golang:1.22rc1-alpine3.19
+
+  # Set destination for COPY
+  WORKDIR /app
+
+  # Download Go modules
+  COPY go.mod go.sum ./
+  RUN go mod download
+
+  # Copy the source code. Note the slash at the end, as explained in
+  # https://docs.docker.com/engine/reference/builder/#copy
+  COPY . ./
+
+  # Build
+  RUN go build -o ./dist/glide
+
+  # Update HostPort in pkg/api/http/config.go to 0.0.0.0:9099. Eventually this will be specified in the config file.
+  EXPOSE 9099 
+
+  # Run 
+  # replace with the name of the config file in root
+  CMD ["./dist/glide", "-c", "./config.yaml"] 
+  ```
+  
+  Now that you have a Dockerfile, build the container.
+
+    ```bash
+    docker build -t <image_name> .
+    ```
+
+4. **Deploy:**
+   Deploy the image to your prefered image hosting platform.
+
+[This Site Powered by Netlify](https://www.netlify.com)
