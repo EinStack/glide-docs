@@ -1,23 +1,31 @@
 import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
+import { Logo } from "./components/Logo";
 
 const config: DocsThemeConfig = {
   logo: (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <img
-        src="images/glide.png"
-        alt="Logo Image"
-        style={{ width: '50px', marginRight: '10px' }}
-      />
-      <span>Glide</span>
-    </div>
-  ), 
+      <Logo />
+  ),
   project: {
     link: 'https://github.com/EinStack/glide',
   },
   chat: {
     link: 'https://discord.gg/pt53Ej7rrc',
   },
+  docsRepositoryBase: "https://github.com/EinStack/glide-docs",
+  footer: {
+    text: (
+        <span>
+            Apache 2.0 {new Date().getFullYear()} ©{' '}
+                    <a href="https://nextra.site" target="_blank">
+              EinStack
+            </a>
+        </span>
+    )
+  },
+  toc: {
+    backToTop: true
+  }
 }
 
 export default config

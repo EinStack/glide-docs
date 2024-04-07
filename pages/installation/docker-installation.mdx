@@ -2,16 +2,18 @@
 title: Docker
 description: How to install and run Glide via Docker
 ---
+import { Steps } from 'nextra/components'
 
 The easiest and quickest way to run Glide is via our [demo repository](https://github.com/EinStack/glide-demo.git) and [docker-compose](https://docs.docker.com/compose/).
 
-### 1. Clone the Demo Repo
+<Steps>
+### Clone the Demo Repo
 
     ```bash
         git clone https://github.com/EinStack/glide-demo.git
     ```
 
-### 2. Init Config
+### Init Config
 
 The demo repository comes with a basic config (learn more about [configurations]()). Additionally, you need to init your secrets by running:
 
@@ -22,7 +24,7 @@ The demo repository comes with a basic config (learn more about [configurations]
 This will create the `secrets` directory with one `.OPENAI_API_KEY` file that you need to put your key to.
 Windows user should create the `secrets` directory and the corresponding `secrets/.OPENAI_API_KEY` file manually.
 
-### 3. Start Glide
+### Start Glide
 
 After that, just use docker compose via this command to start your demo environment:
 
@@ -32,7 +34,7 @@ After that, just use docker compose via this command to start your demo environm
 
 Windows users should simply run `docker-compose up -d`
 
-### 4. Sample API Request to `/chat` endpoin
+### Sample API Request to `/chat` endpoint
 
         ```json
         {
@@ -48,3 +50,4 @@ Windows users should simply run `docker-compose up -d`
         }
         ```
 See [API Reference](/api-reference/introduction) for more details.
+</Steps>

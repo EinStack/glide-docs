@@ -9,14 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git+https://github.com/EinStack/glide-docs.git"
   },
-  "author": "Shu Ding <g@shud.in>",
+  "authors": [
+    "Roma Hlushko <roma@einstack.ai>",
+    "Max Krueger <max@einstack.ai>"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/EinStack/glide-docs/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://glide.einstack.ai/",
   "dependencies": {
     "next": "^14.1.2",
     "nextra": "^2.13.4",

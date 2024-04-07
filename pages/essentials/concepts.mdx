@@ -1,0 +1,47 @@
+---
+title: Concepts
+description: How Glide works on high level
+---
+import RouterConcept from '../../images/concepts/glide_concepts_routers.png';
+
+Glide is a gateway that stands between your applications and external model to
+seamlessly solve for you common cross-cutting concerns like high availability.
+
+## Routers
+
+Glide can be seen as a set of routers.
+The router is a flexible abstraction that helps to tune Glide to your specific use cases.
+
+<p align="center">
+    <img width="500" src={RouterConcept.src} alt="Glide Routers" />
+</p>
+
+Each router consists of a pool of models (e.g text-to-text, text-to-speech, speech-to-text, etc.).
+The router uses the specified strategy to define which model from the pool should serve the next request.
+
+Besides models, it's possible to enable and configure other functionality on the router level like caching.
+So in the end, the router is configured in the way that the specific use case requires.
+
+At the same time, since you can have multiple routers in one Glide cluster,
+one Glide installation could support multiple diverse applications with totally different needs.
+
+All router strategies Glide supports are designed with resiliency in mind.
+So they do fallbacks (when a pool consists of more than one model) and model health tracking automatically.
+
+## Unified API
+
+Glide serves as an abstraction around all external models your applications use. This has the number of upsides:
+
+- Applications talk to Glide and there is no need for them to know what models exactly you are using under the curtain.
+In turn, this simplifies and streamlines model switching and new model adoption.
+- There is no need for applications to know or manage all API keys. Glide serves as a centralized place to manage and rotate them all.
+- Glide unifies model responses keeping your code cleaner
+
+Glide's API doesn't look like any specific model response, however, it does have similar semantics.
+
+## Declarative Configuration
+
+Glide comes with [a declarative YAML configuration](/essentials/configuration) that helps you to define all aspects of
+its work in one single human-readable and auditable format.
+
+Glide allows you to pass secrets like API keys in multiple ways [via environment variables and files](/essentials/configuration#secrets).

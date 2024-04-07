@@ -1,13 +1,16 @@
 {
   "index": "Introduction",
-  "about": {
-    "title": "About",
-    "type": "page"
+  "installation": {
+    "title": "Installation",
+    "docker-installation": "Docker",
+    "kubernetes-installation": "Kubernetes",
+    "local-installation": "Local"
   },
-  "contact": {
-    "title": "Contact ↗",
-    "type": "page",
-    "href": "https://twitter.com/shuding_",
-    "newWindow": true
+  "essentials": {
+    "title": "Essentials",
+    "concepts": "Concepts",
+    "configuration": "Configuration",
+    "providers": "Providers",
+    "routers": "Routers"
   }
 }

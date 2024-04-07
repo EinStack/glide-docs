@@ -1,84 +1,44 @@
 ---
 title: Introduction
-description: 'Welcome to the home of Glide - The Cloud Native LLM Gateway'
+description: Welcome to the Glide's documentation - The Cloud Native LLM Gateway
 ---
+import IntroBanner from '../images/glide_intro.png';
+import Marketecture from '../images/marketecture.svg';
+import { Callout } from 'nextra/components'
+
+<img className="w-full" src={IntroBanner.src} alt="Welcome to Glide" />
 
 ## 🐦 What is Glide?
 
-Glide is a cloud-native LLM gateway, delivering high-performance LLMOps in a lightweight package.
+Glide is a lightweight blazing-fast cloud-native [open-source](https://opensource.com/resources/what-open-source) LLM gateway, delivering high-performance LLMOps in one single binary.
 Glide provides a simplified way to build application resilience, reduce latency, and manage API keys among many other features.
 
-## Install and Deploy 👇
+<img className="w-full" src={Marketecture.src} alt="The Glide's Architecture" />
 
-#### Setup Config File
+<Callout type="warning" emoji="⚠️">
+    Glide is currently under development and the docs are updated frequently.
+</Callout>
 
-The initial phase in deploying Glide involves setting up your configuration file in the project root. For the basic setup, it is essential to have at least one pool with a minimum of one model. 
-```yaml
-routers:
-  language:
-    - id: my-chat-router
-      strategy: priority
-      models:
-        - id: primary
-          openai:
-            api_key: "XXXXXXXXX"
-```
+## Why Glide?
 
+TBU
 
-#### Deployment
+## Features
 
-Currently the only supported deployment is via container.
+- **Unified API**: Change your model providers without a need to modify your applications
+- **High Performance**: Written in [Golang](https://go.dev/) with the best practices of software development in a cloud-native environments in mind
+- Flexible **routing** across several models and various strategies like [the least latency](/essentials/routers#least-latency-router), [weighted round-robin](http://localhost:3000/essentials/routers#weighted-round-robin-router), [round-robin](http://localhost:3000/essentials/routers#round-robin-router), [priority-based routing](/essentials/routers#priority-router). All strategies include **low-latency fallback mechanisms** to ensure resiliency
+- Support [Popular LLM providers](/essentials/providers)
+- **Centralized** configuration and API key management
+- **Production-ready Observability**: Always know what's going on with the heart of your system via logs, metrics, and traces. [OpenTelemetry](https://opentelemetry.io/) is natively supported (coming soon).
+- and [much more is coming](https://github.com/EinStack/glide/blob/develop/ROADMAP.md)
 
-#### Docker
+## Installation
 
-1. **Install Git:**
-   Ensure that Git is installed on your machine. You can download it from [Git's official website](https://git-scm.com/).
+TBU
 
-2. **Clone the Repository:**
-   Open a terminal or command prompt and paste the code below:
+## License
 
-   ```bash
-   git clone https://github.com/EinStack/glide.git
-   ```
+Glide is provided under [Apache 2.0](https://github.com/EinStack/glide/blob/develop/LICENSE) open source license.
 
-3. **Build Docker Image:**
-
-  Create a Dockerfile in the project root. Below is a sample.
-
-    ```Dockerfile
-    # syntax=docker/dockerfile:1
-
-  FROM golang:1.22rc1-alpine3.19
-
-  # Set destination for COPY
-  WORKDIR /app
-
-  # Download Go modules
-  COPY go.mod go.sum ./
-  RUN go mod download
-
-  # Copy the source code. Note the slash at the end, as explained in
-  # https://docs.docker.com/engine/reference/builder/#copy
-  COPY . ./
-
-  # Build
-  RUN go build -o ./dist/glide
-
-  # Update HostPort in pkg/api/http/config.go to 0.0.0.0:9099. Eventually this will be specified in the config file.
-  EXPOSE 9099 
-
-  # Run 
-  # replace with the name of the config file in root
-  CMD ["./dist/glide", "-c", "./config.yaml"] 
-  ```
-  
-  Now that you have a Dockerfile, build the container.
-
-    ```bash
-    docker build -t <image_name> .
-    ```
-
-4. **Deploy:**
-   Deploy the image to your prefered image hosting platform.
-
-[This Site Powered by Netlify](https://www.netlify.com)
+Developed with ❤️ by [Roma](https://github.com/roma-glushko), [Max](https://github.com/mkrueger12), and the rest of [the EinStack Community](https://github.com/EinStack).
