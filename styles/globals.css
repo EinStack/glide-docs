@@ -19,3 +19,13 @@ html[class~=dark] .dark\:nx-block {
 html[class~=dark] .dark\:nx-hidden {
     display: none;
 }
+
+body .nextra-steps h3:before {
+    color: inherit;
+    font-size: 0.8rem;
+    font-weight: 800;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-radius: .5rem;
+}
