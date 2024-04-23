@@ -1,16 +1,11 @@
 {
-  "index": "Introduction",
-  "installation": {
-    "title": "Installation",
-    "docker-installation": "Docker",
-    "kubernetes-installation": "Kubernetes",
-    "local-installation": "Local"
-  },
-  "essentials": {
-    "title": "Essentials",
-    "concepts": "Concepts",
-    "configuration": "Configuration",
-    "providers": "Providers",
-    "routers": "Routers"
+  "index": "Getting Started",
+  "installation": "Installation",
+  "essentials": "Essentials",
+  "learn": {
+    "title": "Support",
+    "type": "page",
+    "href": "https://github.com/EinStack/glide/discussions/categories/general",
+    "newWindow": true
   }
 }

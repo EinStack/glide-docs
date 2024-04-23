@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hover\:nx-border-primary-500:hover {
+    --tw-border-opacity: 1;
+    border-color: hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) 50% / var(--tw-border-opacity));
+}
+
+html[class~=dark] .dark\:hover\:nx-border-primary-500:hover {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) 50% / var(--tw-border-opacity));
+}
