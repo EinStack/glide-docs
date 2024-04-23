@@ -1,0 +1,37 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sections {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    row-gap: 1rem;
+}
+
+.company {
+
+}
+
+.companyLogo img {
+    width: 5rem;
+}
+
+.socials {
+    display: flex;
+}
+
+.socials .social {
+    height: 2rem;
+    width: 2rem;
+}
+
+.copyright {
+    @apply text-center;
+}
