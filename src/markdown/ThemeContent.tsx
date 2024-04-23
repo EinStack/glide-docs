@@ -1,6 +1,6 @@
 export const LightOnly = ({children}) => {
     return (
-        <div className={"dark:nx-hidden"}>
+        <div className={"dark:hidden"}>
             {children}
         </div>
     )
@@ -8,7 +8,7 @@ export const LightOnly = ({children}) => {
 
 export const DarkOnly = ({children}) => {
     return (
-        <div className={"nx-hidden dark:nx-block"}>
+        <div className={"hidden dark:block"}>
             {children}
         </div>
     )

@@ -12,14 +12,6 @@ html[class~=dark] .dark\:hover\:nx-border-primary-500:hover {
   border-color: hsl(var(--nextra-primary-hue) var(--nextra-primary-saturation) 50% / var(--tw-border-opacity));
 }
 
-html[class~=dark] .dark\:nx-block {
-    display: block;
-}
-
-html[class~=dark] .dark\:nx-hidden {
-    display: none;
-}
-
 body .nextra-steps h3:before {
     color: inherit;
     font-size: 0.8rem;
@@ -28,4 +20,8 @@ body .nextra-steps h3:before {
     display: flex;
     justify-content: center;
     border-radius: .5rem;
+}
+
+.callout a {
+    color: inherit;
 }

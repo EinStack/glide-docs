@@ -6,6 +6,7 @@ import {Footer} from "@components/Footer";
 import {DarkOnly, LightOnly} from "@markdown/ThemeContent";
 import {Head} from "@components/Head";
 import {SEO} from "@components/SEO";
+import {Info, Note, Warning, Tip, Important, Check} from "@markdown/Callouts";
 
 const config: DocsThemeConfig = {
   primaryHue: 165,
@@ -45,6 +46,12 @@ const config: DocsThemeConfig = {
     LightOnly,
     DarkOnly,
     Steps,
+    Info,
+    Warning,
+    Note,
+    Tip,
+    Important,
+    Check,
   },
   // SEO
   useNextSeoProps: SEO,
