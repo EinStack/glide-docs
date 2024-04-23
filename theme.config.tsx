@@ -1,9 +1,11 @@
 import React from 'react'
-import {Card as NavCard, Cards as NavCards, DocsThemeConfig} from 'nextra-theme-docs'
+import {Card as NavCard, Cards as NavCards, Steps, DocsThemeConfig} from 'nextra-theme-docs'
 import { Logo } from "@components/Logo";
 import { Card, Cards } from "@markdown/Cards";
 import {Footer} from "@components/Footer";
 import {DarkOnly, LightOnly} from "@markdown/ThemeContent";
+import {Head} from "@components/Head";
+import {SEO} from "@components/SEO";
 
 const config: DocsThemeConfig = {
   primaryHue: 165,
@@ -42,7 +44,11 @@ const config: DocsThemeConfig = {
     NavCards,
     LightOnly,
     DarkOnly,
+    Steps,
   },
+  // SEO
+  useNextSeoProps: SEO,
+  head: Head
 }
 
 export default config
