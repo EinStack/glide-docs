@@ -6,7 +6,7 @@ import {Footer} from "@components/Footer";
 
 const config: DocsThemeConfig = {
   primaryHue: 165,
-  primarySaturation: {dark: 100, light: 88},
+  primarySaturation: {dark: 100, light: 85},
   logo: (
       <Logo />
   ),

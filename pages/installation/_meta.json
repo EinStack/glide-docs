@@ -1,5 +1,5 @@
 {
-  "docker-installation": "Docker",
-  "kubernetes-installation": "Kubernetes",
-  "local-installation": "Local"
+  "docker": "Docker",
+  "kubernetes": "Kubernetes",
+  "local": "Local"
 }
