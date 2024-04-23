@@ -15,9 +15,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@markdown/*": ["src/markdown/*"],
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@markdown/*": ["./src/markdown/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
