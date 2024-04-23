@@ -1,4 +1,4 @@
-import LogoImg from '../images/glide_bird_in_circle.png';
+import LogoImg from '../../images/glide_bird_in_circle.png';
 
 export function Logo() {
     return (
