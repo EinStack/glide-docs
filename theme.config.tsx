@@ -3,6 +3,7 @@ import {Card as NavCard, Cards as NavCards, DocsThemeConfig} from 'nextra-theme-
 import { Logo } from "@components/Logo";
 import { Card, Cards } from "@markdown/Cards";
 import {Footer} from "@components/Footer";
+import {DarkOnly, LightOnly} from "@markdown/ThemeContent";
 
 const config: DocsThemeConfig = {
   primaryHue: 165,
@@ -39,6 +40,8 @@ const config: DocsThemeConfig = {
     Cards,
     NavCard,
     NavCards,
+    LightOnly,
+    DarkOnly,
   },
 }
 
