@@ -40,15 +40,27 @@
     @apply transition duration-150 ease-in-out text-gray-400 hover:text-gray-900 dark:hover:text-gray-300;
 }
 
-.gridCopyrightContent {
+.copyrightContent {
     @apply flex flex-row items-center justify-between pt-8 mt-16 border-t border-black/10 dark:border-white/10 sm:mt-20 lg:mt-24;
 }
 
-.gridCopyrightContent .gridCopyright {
+.copyrightContent .copyright {
     @apply text-xs leading-5 text-gray-400;
 }
 
 .gridNetlify {
     width: 6rem;
     @apply transition duration-150 ease-in-out opacity-50 hover:opacity-100;
+}
+
+.resourceTitle {
+    @apply text-sm font-semibold leading-6 text-black dark:text-white;
+}
+
+.resourceLinks {
+    @apply mt-6 space-y-4;
+}
+
+.resourceLink {
+    @apply px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 !p-0;
 }

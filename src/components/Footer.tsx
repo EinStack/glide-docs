@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faDiscord, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
-import {config} from "../../config";
+import {config} from "@config";
 
 import styles from "./Footer.module.css"
 
@@ -81,14 +81,12 @@ type ResourceColProps = {
 const ResourceCol: React.FC<ResourceColProps> = ({title, resources}) => {
     return (
         <div>
-            <h3 className="text-sm font-semibold leading-6 text-black dark:text-white">{title}</h3>
-            <ul role="list" className="mt-6 space-y-4">
+            <h3 className={styles.resourceTitle}>{title}</h3>
+            <ul role="list" className={styles.resourceLinks}>
                 {resources && resources.map(resource => (
-                    <li>
-                        <a target={resource.external ? "_parent" : "_blank"} href={resource.url}>
-                            <button
-                                className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0"> {resource.title} {resource.external ? "↗" : ""}
-                            </button>
+                    <li className={styles.resourceLink} key={resource.url}>
+                        <a target={resource.external ? "_blank" : "_parent"} href={resource.url}>
+                            {resource.title} {resource.external ? "↗" : ""}
                         </a>
                     </li>
                 ))}
@@ -123,7 +121,7 @@ export const Footer = () => {
 
     const resources: Resource[] = [
         {
-            url: "/get-started",
+            url: "/",
             title: "Get Started",
             external: false,
         },
@@ -195,8 +193,8 @@ export const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className={styles.gridCopyrightContent}>
-                <div className={styles.gridCopyright}>
+            <div className={styles.copyrightContent}>
+                <div className={styles.copyright}>
                     <p>© 2023–Present, EinStack Authors.
                         Documentation distributed under
                         <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
