@@ -1,5 +1,7 @@
 # Glide Docs
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ee7128d4-c383-4ea5-8cb1-bff3550f9454/deploy-status)](https://app.netlify.com/sites/glidedocs/deploys)
+
 Documentation for Glide LLM Gateway.
 
 ## Quick Start
