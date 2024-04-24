@@ -1,11 +1,5 @@
 {
   "index": "Getting Started",
   "installation": "Installation",
-  "essentials": "Essentials",
-  "learn": {
-    "title": "Support",
-    "type": "page",
-    "href": "https://github.com/EinStack/glide/discussions/categories/general",
-    "newWindow": true
-  }
+  "essentials": "Essentials"
 }

@@ -1,12 +1,13 @@
-import LogoImg from '../../images/glide_bird_in_circle.png';
+import React from "react";
+
+import styles from "./Logo.module.css"
 
 export function Logo() {
     return (
-        <div style={{display: 'flex', alignItems: 'center'}}>
+        <div className={styles.logo}>
             <img
-                src={LogoImg.src}
+                src={"/images/logo/glide.png"}
                 alt="Glide Logo"
-                style={{width: '40px', marginRight: '5px'}}
             />
             <span>Glide</span>
         </div>
