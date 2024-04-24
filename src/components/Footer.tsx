@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faDiscord, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
-import {config} from "../../config";
+import {config} from "@config";
 
 import styles from "./Footer.module.css"
 
@@ -85,7 +85,7 @@ const ResourceCol: React.FC<ResourceColProps> = ({title, resources}) => {
             <ul role="list" className="mt-6 space-y-4">
                 {resources && resources.map(resource => (
                     <li>
-                        <a target={resource.external ? "_parent" : "_blank"} href={resource.url}>
+                        <a target={resource.external ? "_blank" : "_parent"} href={resource.url}>
                             <button
                                 className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0"> {resource.title} {resource.external ? "↗" : ""}
                             </button>
@@ -123,7 +123,7 @@ export const Footer = () => {
 
     const resources: Resource[] = [
         {
-            url: "/get-started",
+            url: "/",
             title: "Get Started",
             external: false,
         },

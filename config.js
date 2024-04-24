@@ -1,3 +1,5 @@
+// Make sure your changes are in sync with public/_redirects
+
 exports.config = {
     company: {
         url: "https://www.einstack.ai/",
