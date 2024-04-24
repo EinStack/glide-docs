@@ -21,7 +21,7 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/EinStack/glide',
   },
   chat: {
-    link: 'https://discord.gg/pt53Ej7rrc',
+    link: 'https://discord.gg/K2CqmBhk4Z',
   },
   docsRepositoryBase: "https://github.com/EinStack/glide-docs",
   footer: {

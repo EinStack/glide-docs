@@ -6,32 +6,49 @@
 }
 
 .sections {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
-    width: 100%;
-    row-gap: 1rem;
+    @apply xl:grid xl:grid-cols-3 xl:gap-8;
 }
 
 .company {
-
+    @apply space-y-8;
 }
 
-.companyLogo img {
-    width: 5rem;
+.company a {
+    @apply flex flex-col space-y-8;
 }
 
-.socials {
-    display: flex;
+.company .companyCredo {
+    @apply text-sm leading-6 mt-2;
 }
 
-.socials .social {
-    height: 2rem;
-    width: 2rem;
+.company .companyLogo img {
+    width: 10.5rem;
+    @apply opacity-100 grayscale;
 }
 
-.copyright {
-    @apply text-center;
+.company a:hover .companyCredo {
+    @apply transition duration-150 ease-in-out text-gray-900 dark:text-gray-300;
+}
+
+.company .socials {
+    @apply flex space-x-6 grayscale;
+}
+
+.company .socials .social {
+    height: 1.5rem;
+    width: 1.5rem;
+    @apply transition duration-150 ease-in-out text-gray-400 hover:text-gray-900 dark:hover:text-gray-300;
+}
+
+.gridCopyrightContent {
+    @apply flex flex-row items-center justify-between pt-8 mt-16 border-t border-black/10 dark:border-white/10 sm:mt-20 lg:mt-24;
+}
+
+.gridCopyrightContent .gridCopyright {
+    @apply text-xs leading-5 text-gray-400;
+}
+
+.gridNetlify {
+    width: 6rem;
+    @apply transition duration-150 ease-in-out opacity-50 hover:opacity-100;
 }
