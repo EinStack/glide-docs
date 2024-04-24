@@ -1,7 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faDiscord, faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
+
+import {config} from "../../config";
 
 import styles from "./Footer.module.css"
 
@@ -27,17 +29,17 @@ const EinStackLogo = () => {
 const Socials = () => {
     return (
         <div className={styles.socials}>
-            <a target="_blank" href={"https://github.com/EinStack/glide"} title="View Glide Github">
+            <a target="_blank" href={config.company.github} title="View Glide Github">
                 <FontAwesomeIcon className={styles.social} icon={faGithub}/>
             </a>
-            <a target="_blank" href={"https://discord.gg/K2CqmBhk4Z"} title="Join us in Discord">
+            <a target="_blank" href={config.company.discord} title="Join us in Discord">
                 <FontAwesomeIcon className={styles.social} icon={faDiscord}/>
             </a>
-            <a target="_blank" href={"https://www.linkedin.com/company/einstack/"}
+            <a target="_blank" href={config.company.linkedIn}
                title="View EinStack LinkedIn">
                 <FontAwesomeIcon className={styles.social} icon={faLinkedin}/>
             </a>
-            <a target="_blank" href={"mailto:contact@einstack.ai"} title="Send us an email">
+            <a target="_blank" href={`mailto:${config.company.email}`} title="Send us an email">
                 <FontAwesomeIcon className={styles.social} icon={faEnvelope}/>
             </a>
         </div>
@@ -65,12 +67,121 @@ const NetlifyBadge = () => {
     )
 }
 
+type Resource = {
+    url: string;
+    title: string;
+    external: boolean;
+}
+
+type ResourceColProps = {
+    title: string;
+    resources: Resource[];
+};
+
+const ResourceCol: React.FC<ResourceColProps> = ({title, resources}) => {
+    return (
+        <div>
+            <h3 className="text-sm font-semibold leading-6 text-black dark:text-white">{title}</h3>
+            <ul role="list" className="mt-6 space-y-4">
+                {resources && resources.map(resource => (
+                    <li>
+                        <a target={resource.external ? "_parent" : "_blank"} href={resource.url}>
+                            <button
+                                className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0"> {resource.title} {resource.external ? "↗" : ""}
+                            </button>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
 export const Footer = () => {
+    const projectResources: Resource[] = [
+        {
+            url: "/glide/github",
+            title: "GitHub",
+            external: true,
+        },
+        {
+            url: "/glide/producthunt",
+            title: "ProductHunt",
+            external: true,
+        },
+        {
+            url: "/glide/artifacthub",
+            title: "ArtifactHub",
+            external: true,
+        },
+        {
+            url: "/glide/dockerhub",
+            title: "DockerHub",
+            external: true,
+        },
+    ]
+
+    const resources: Resource[] = [
+        {
+            url: "/get-started",
+            title: "Get Started",
+            external: false,
+        },
+        {
+            url: "/glide/releases",
+            title: "Releases",
+            external: true,
+        },
+        {
+            url: "/glide/roadmap",
+            title: "Roadmap",
+            external: true,
+        },
+        {
+            url: "/glide/geps",
+            title: "GEPs",
+            external: true,
+        },
+        {
+            url: "/glide/conduct",
+            title: "Code of Conduct",
+            external: true,
+        },
+        {
+            url: "/glide/contributing",
+            title: "Contributing",
+            external: true,
+        },
+        {
+            url: "/glide/examples",
+            title: "Examples",
+            external: true,
+        },
+    ]
+
+    const feedbackResources: Resource[] = [
+        {
+            url: "/discord",
+            title: "Join Discord",
+            external: true,
+        },
+        {
+            url: "/glide/new-issue",
+            title: "Report an issue",
+            external: true,
+        },
+        {
+            url: "/glide/new-vuln",
+            title: "Report a vulnerability",
+            external: true,
+        },
+    ]
+
     return (
         <div className={styles.content}>
             <div className={styles.sections}>
                 <div className={styles.company}>
-                    <a href={"https://www.einstack.ai/"}>
+                    <a href={config.company.url}>
                         <EinStackLogo/>
                         <span className={styles.companyCredo}>Open reliable infrastructure for GenAI applications</span>
                     </a>
@@ -78,118 +189,17 @@ export const Footer = () => {
                 </div>
                 <div className={"grid grid-cols-1 gap-8 mt-16 xl:col-span-2 xl:mt-0"}>
                     <div className={"md:grid md:grid-cols-3 md:gap-8"}>
-                        <div>
-                            <h3 className="text-sm font-semibold leading-6 text-black dark:text-white">Company</h3>
-                            <ul role="list" className="mt-6 space-y-4">
-                                <li>
-                                    <a target="_parent" href="/pricing">
-                                        <button
-                                            className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">
-                                            GitHub
-                                        </button>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a target="_parent" href="https://docs.vocode.dev">
-                                        <button
-                                            className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">
-                                            ArtifactHub
-                                        </button>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a target="_parent" href="https://docs.vocode.dev">
-                                        <button
-                                            className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">
-                                            DockerHub
-                                        </button>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-semibold leading-6 text-black dark:text-white">Resources</h3>
-                            <ul role="list" className="mt-6 space-y-4">
-                                <li><a target="_parent" href="/pricing">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Get
-                                        Started
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent" href="https://docs.vocode.dev">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Releases
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent" href="https://docs.vocode.dev">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Roadmap
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent" href="https://docs.vocode.dev">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">GEPs
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent" href="https://docs.vocode.dev">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Code
-                                        of Conduct
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent" href="https://docs.vocode.dev">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Contributing
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent" href="https://docs.vocode.dev">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Examples
-                                    </button>
-                                </a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-semibold leading-6 text-black dark:text-white">Feedback</h3>
-                            <ul role="list" className="mt-6 space-y-4">
-                                <li>
-                                    <a target="_parent" href="https://docs.vocode.dev">
-                                        <button
-                                            className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">
-                                            Join Discord
-                                        </button>
-                                    </a>
-                                </li>
-                                <li><a target="_parent" href="/pricing">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Report
-                                        an issue
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent"
-                                       href="https://github.com/EinStack/glide/discussions/categories/general">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Ask
-                                        a question
-                                    </button>
-                                </a></li>
-                                <li><a target="_parent"
-                                       href="https://github.com/EinStack/glide/discussions/categories/general">
-                                    <button
-                                        className="px-2 py-1 text-sm font-medium transition duration-150 ease-in-out rounded-md outline-none focus-visible:ring-2 focus-visible:ring-slate-7 text-slate-11 hover:text-slate-12 focus-visible:text-slate-12 !p-0">Report
-                                        a vulnerability
-                                    </button>
-                                </a></li>
-                            </ul>
-                        </div>
+                        <ResourceCol title={"Project"} resources={projectResources} />
+                        <ResourceCol title={"Resources"} resources={resources} />
+                        <ResourceCol title={"Feedback"} resources={feedbackResources} />
                     </div>
                 </div>
             </div>
             <div className={styles.gridCopyrightContent}>
                 <div className={styles.gridCopyright}>
                     <p>© 2023–Present, EinStack Authors.
-                        Documentation distributed under <a target="_blank"
-                                                           href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
+                        Documentation distributed under
+                        <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
                     </p>
                 </div>
                 <NetlifyBadge/>
