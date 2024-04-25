@@ -4,6 +4,12 @@ const { config } = require("./config");
 // NextJS redirects don't work in Netlify for some reason
 
 exports.tempRedirects = [
+    // TODO: redirect docs.einstack.ai & docs.einstack.ai/glide to docs.einstack.ai/glide/docs for now
+    //  since we have not content under those paths
+    ["/", "/glide/docs/"],
+    ["/glide", "/glide/docs/"],
+    ["/glide/", "/glide/docs/"],
+    // marketing
     ["/discord", config.company.discord],
     // Glide
     ["/glide/github", config.glide.github],
