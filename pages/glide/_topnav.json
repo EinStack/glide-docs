@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Changelog",
+    "url": "/glide/releases",
+    "icon": "list"
+  },
+  {
+    "title": "Roadmap",
+    "url": "/glide/roadmap",
+    "icon": "map"
+  }
+]

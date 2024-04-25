@@ -7,7 +7,7 @@ module.exports = {
   ],
   variants: {
     extend: {
-    },
+    }
   },
   theme: {
     extend: {
