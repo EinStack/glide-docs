@@ -7,18 +7,16 @@ export const Head = () => {
     const { asPath, defaultLocale, locale } = useRouter();
     const { frontMatter, title: pageTitle } = useConfig();
     const url =
-        "https://einstack.ai" +
+        "https://docs.einstack.ai" +
         (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
 
-    const description = frontMatter.description ?? "";
+    // TODO: make metadata depend on the project docs
 
+    const description = frontMatter.description ?? "";
     const title = frontMatter.title ?? pageTitle;
 
-    const section = asPath.startsWith("/docs") ? "Docs" : "";
-
-    const image = frontMatter.ogImage ? "https://langfuse.com" + frontMatter.ogImage : null;
-
-    const video = frontMatter.ogVideo ? "https://langfuse.com" + frontMatter.ogVideo : null;
+    const image = frontMatter.ogImage ? "https://docs.einstack.ai" + frontMatter.ogImage : "https://docs.einstack.ai/images/glide/og.png";
+    const video = frontMatter.ogVideo ? "https://docs.einstack.ai" + frontMatter.ogVideo : null;
 
     return (
         <>
@@ -35,8 +33,8 @@ export const Head = () => {
             <meta property="twitter:image" content={image} />
 
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:site:domain" content="einstack.ai" />
-            <meta name="twitter:url" content="https://einstack.ai" />
+            <meta name="twitter:site:domain" content="docs.einstack.ai" />
+            <meta name="twitter:url" content="https://docs.einstack.ai" />
 
             <link
                 rel="apple-touch-icon"
