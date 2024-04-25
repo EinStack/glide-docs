@@ -7,6 +7,7 @@ import {DarkOnly, LightOnly} from "@markdown/ThemeContent";
 import {Head} from "@components/Head";
 import {SEO} from "@components/SEO";
 import {Info, Note, Warning, Tip, Important, Check} from "@markdown/Callouts";
+import {titleRenderer} from "@components/TopNav";
 
 const config: DocsThemeConfig = {
   primaryHue: 165,
@@ -31,6 +32,7 @@ const config: DocsThemeConfig = {
   },
   sidebar: {
     toggleButton: true,
+    titleComponent: titleRenderer,
   },
   editLink: {
     text: "Edit this page on GitHub",

@@ -16,6 +16,7 @@
     "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"],
+      "@pages/*": ["./pages/*"],
       "@config": ["./config.js"],
       "@styles/*": ["./styles/*"],
       "@components/*": ["./src/components/*"],

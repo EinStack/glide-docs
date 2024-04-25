@@ -2,5 +2,9 @@
   "glide": {
     "type": "page",
     "title": "Glide"
+  },
+  "redrock": {
+    "type": "page",
+    "title": "RedRock"
   }
 }
