@@ -1,5 +1,6 @@
 {
-  "index": "Getting Started",
-  "installation": "Installation",
-  "essentials": "Essentials"
+  "glide": {
+    "type": "page",
+    "title": "Glide"
+  }
 }

@@ -30,7 +30,7 @@ const config: DocsThemeConfig = {
     )
   },
   sidebar: {
-    toggleButton: true
+    toggleButton: true,
   },
   editLink: {
     text: "Edit this page on GitHub",

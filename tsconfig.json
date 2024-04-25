@@ -17,6 +17,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@config": ["./config.js"],
+      "@styles/*": ["./styles/*"],
       "@components/*": ["./src/components/*"],
       "@markdown/*": ["./src/markdown/*"],
     }
