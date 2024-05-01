@@ -8,6 +8,7 @@ import {Head} from "@components/Head";
 import {SEO} from "@components/SEO";
 import {Info, Note, Warning, Tip, Important, Check} from "@markdown/Callouts";
 import {titleRenderer} from "@components/TopNav";
+import { GithubMenuBadge } from '@/components/GitHubBadge';
 
 const config: DocsThemeConfig = {
   primaryHue: 165,
@@ -18,9 +19,6 @@ const config: DocsThemeConfig = {
   search: {
     placeholder: "Search...",
   },
-  project: {
-    link: 'https://github.com/EinStack/glide',
-  },
   chat: {
     link: 'https://discord.gg/K2CqmBhk4Z',
   },
@@ -29,6 +27,9 @@ const config: DocsThemeConfig = {
     text: (
         <Footer />
     )
+  },
+  navbar: {
+    extraContent: <GithubMenuBadge />
   },
   sidebar: {
     toggleButton: true,
