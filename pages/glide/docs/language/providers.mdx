@@ -77,6 +77,10 @@ Here is a list of all supported provider model params:
 
 ## Anthropic
 
+<Warning>
+    Anthropic has not yet integrated with the streaming chat API.
+</Warning>
+
 [Anthropic](https://www.anthropic.com/)
 
 Below is an example Anthropic provider config:
@@ -129,28 +133,89 @@ Here is a list of all supported provider model params:
 
 ## AWS Bedrock
 
+<Warning>
+    Bedrock has not yet integrated with the streaming chat API.
+</Warning>
+
 ```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: cohere
+          bedrock:
+            base_url: <YOUR AWS ENDPOINT>
+            chat_endpoint: /model
+            model: amazon.titan-text-express-v1
+            api_key: <YOUR API KEY>
+            access_key: <YOUR ACCESS KEY>
+            secret_key: <YOUR SECRET KEY>
+            aws_region: <YOUR REGION>
+            default_params:
+                temperature: 0
+                top_p: 1
+                max_tokens: 512
+                stop_sequences: []
 ```
 
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/bedrock/config.go#L9)
+
 ## OctoML
+
+<Warning>
+    OctoML has not yet integrated with the streaming chat API.
+</Warning>
 
 [OctoML](https://octo.ai/) the default_params and model name for OctoML. Specify override values in the `config.yaml` file.
 
 ```yaml
-model: "mistral-7b-instruct-fp16"
-default_params:
-  temperature: 1 # number between 0 - 2
-  top_p: 1
-  max_tokens: 100
-  stop:
-    - ""
-  frequency_penalty: 0
-  presence_penalty: 0
+routers:
+  language:
+    - id: default
+      models:
+        - id: octoml
+          octoml:
+            base_url: https://text.octoai.run/v1
+            chat_endpoint: /chat/completions
+            model: mistral-7b-instruct-fp16
+            api_key: <YOUR API KEY>
+            default_params:
+                temperature: 1
+                top_p: 1
+                max_tokens: 100
+
 ```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/octoml/config.go#L9)
 
 ## Ollama
 
-[]()
+<Warning>
+    Ollama has not yet integrated with the streaming chat API.
+</Warning>
+
+[Ollama](https://ollama.com/) is a great way to serve Open Source LLMs locally and beyond.
+
+Here is an example Ollama configuration:
 
 ```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: ollama
+          ollama:
+            base_url: http://localhost:11434
+            chat_endpoint: /api/chat
+            model: llama3
+            default_params:
+                temperature: 0.8
+                top_p: 0.9
+                num_ctx: 2048
+                top_k: 40
 ```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/ollama/config.go#L5)
