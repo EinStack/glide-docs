@@ -23,5 +23,7 @@
     "type": "separator",
     "title": "Functionality"
   },
-  "routers": "Routing"
+  "resiliency": "Resiliency",
+  "routers": "Routing",
+  "observability": "Observability"
 }
