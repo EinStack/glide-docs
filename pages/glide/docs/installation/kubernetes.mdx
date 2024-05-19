@@ -18,7 +18,7 @@ Before moving on, please make sure you have [Helm CLI](https://helm.sh/) and [ku
         Before installing the Helm chart, you need to create a Kubernetes secret with your API keys like:
 
         ```bash
-        kubectl create secret generic api-keys --from-literal=OPENAI_API_KEY=sk-abcdXYZ
+        kubectl create secret generic api-keys --from-literal=OPENAI_API_KEY=<YOUR OPENAI KEY>
         ```
 
         By default, Glide's chart comes with a configuration that contains [one language router]() with one OpenAI model that requires to put API key under the `OPENAI_API_KEY` environment variable.

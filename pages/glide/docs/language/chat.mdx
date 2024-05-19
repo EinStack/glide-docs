@@ -1,0 +1,81 @@
+---
+title: Chat
+description: Glide Non-streaming Chat API
+---
+# Chat
+
+Chat API is a fundamental functionality of text-to-text conversational models.
+
+Glide provides a unified API over all supported providers,
+so your applications just need to communicate with LLM providers via the Glide API to be able to seamlessly switch providers.
+
+Under the hood, a request will be routed according to [a given router setup](/glide/docs/routers)
+considering routing strategy, provider health, etc.
+
+## Chat Schemas
+
+Route:
+```
+POST <BASE_URL>/v1/language/<ROUTER_ID>/chat
+```
+
+<Info>
+    Router ID comes from [a Glide configuration file](/glide/docs/configuration#basic-configuration).
+</Info>
+
+Sample Request Payload:
+```json
+{
+    "message": {
+        "role": "user",
+        "content": "Where was it played?"
+    },
+    "message_history": [
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Who won the world series in 2020?"},
+        {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."}
+    ]
+}
+```
+
+Response:
+
+```json
+{
+    "id": "chatcmpl-9QcPG6UcBttEbXmBVJvObWwrVxtZh",
+    "created_at": 1716131190,
+    "provider_id": "openai",
+    "router_id": "default",
+    "model_id": "openai",
+    "model_name": "gpt-3.5-turbo-0125",
+    "model_response": {
+        "metadata": {},
+        "message": {
+            "role": "assistant",
+            "content": "The 2020 World Series was played at a neutral site due to the COVID-19 pandemic. The games were held at Globe Life Field in Arlington, Texas."
+        },
+        "token_usage": {
+            "prompt_tokens": 53,
+            "response_tokens": 33,
+            "total_tokens": 86
+        }
+    }
+}
+```
+
+In case of error, the Glide schema looks like this:
+
+```json
+{
+    "name": "router_not_found", // error name
+    "message": "router is not found" // human-readable error message
+}
+```
+
+## OpenAPI Spec
+
+Glide expose an OpenAPI specification of its synchronous API under:
+
+```json
+GET <BASE_URL>/v1/swagger
+```

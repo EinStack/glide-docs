@@ -4,13 +4,13 @@ description: How to install and run Glide via Docker
 ---
 # Docker Installation
 
-The easiest and quickest way to run Glide is via our [demo repository](https://github.com/EinStack/glide-demo.git) and [docker-compose](https://docs.docker.com/compose/).
+The easiest and quickest way to run Glide is via our [examples repository](https://github.com/EinStack/glide-demo.git) and [docker-compose](https://docs.docker.com/compose/).
 
 <Steps>
 ### Clone the Demo Repo
 
     ```bash
-        git clone https://github.com/EinStack/glide-demo.git
+        git clone https://github.com/EinStack/glide-examples.git
     ```
 
 ### Init Config
@@ -36,18 +36,21 @@ Windows users should simply run `docker-compose up -d`
 
 ### Sample API Request to `/chat` endpoint
 
-        ```json
-        {
-            "message": {
-                "role": "user",
-                "content": "Where was it played?"
-            },
-            "messageHistory": [
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": "Who won the world series in 2020?"},
-                {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."}
-            ]
-        }
-        ```
-See [API Reference](/api-reference/introduction) for more details.
+    URL: POST `http://127.0.0.1:9099/v1/language/default/chat`
+
+    Payload:
+    ```json
+    {
+        "message": {
+            "role": "user",
+            "content": "Where was it played?"
+        },
+        "message_history": [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Who won the world series in 2020?"},
+            {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."}
+        ]
+    }
+    ```
+
 </Steps>

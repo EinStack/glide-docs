@@ -18,10 +18,24 @@
     "title": "LLMs"
   },
   "language": "Language",
+  "speech": "Speech",
+  "embeddings": "Embeddings",
+  "classification": "Classification",
 
   "-- Functionality": {
     "type": "separator",
     "title": "Functionality"
   },
-  "routers": "Routing"
+  "routers": "Routing",
+  "caching": "Caching",
+  "safety": "Safety Policies",
+  "cost-budgeting": "Cost & Budgeting",
+  "observability": "Observability",
+  "security": "Security",
+
+  "-- SDKs": {
+    "type": "separator",
+    "title": "SDKs"
+  },
+  "python-sdk": "Python"
 }

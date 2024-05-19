@@ -196,7 +196,7 @@ export const Footer = () => {
             <div className={styles.copyrightContent}>
                 <div className={styles.copyright}>
                     <p>© 2023–Present, EinStack Authors.
-                        Documentation distributed under
+                        Documentation distributed under&nbsp;
                         <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
                     </p>
                 </div>
