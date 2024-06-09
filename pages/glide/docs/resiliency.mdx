@@ -9,7 +9,33 @@ Other than that, Glide exposes a various of configurations to let you control th
 
 ## Adaptive Health Tracking
 
-TBU
+Every time your models fail to serve a request, Glide tracks that and uses that information to make decisions about which model to use next.
+If a model fails below a certain threshold in a period of time (known as the error budget),
+Glide will consider that model unhealthy and will not use it to serve requests until its error budget recovers.
+
+Here is a list of conditions that are considered as a failure:
+- a model returns an error response (e.g. 5xx HTTP status code). This normally implies some temporary issues on the provide side.
+- a model request is rate limited (e.g. 429 HTTP status code). Glide will mark the model as unhealthy for a specific time.
+- a model request times out. This usually means the provider is overloaded or has a temporary issues.
+- a model request fails with an authentication error (e.g. 401 HTTP status code). Glide will mark the model as unhealthy forever.
+- a model returns no response (e.g. in case of OpenAI, the `choices` array is empty).
+
+Health Tracking configuration (located on the model item level):
+- `routers.language[].models[].error_budget` (default: "10/m") - the number of errors per second to tolerate before considering the model unhealthy. Supported time units: `ms`, `s`, `m` (minutes), `h`.
+- `routers.language[].models[].client.timeout` (default: "10s") - the timeout for model requests
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: openai
+          error_budget: "10/m" # tolerate not more than 10 failures per minute
+          client:
+            timeout: "10s" # wait not longer than 10 seconds to receive a response from the model
+          openai:
+            api_key: "${env:OPENAI_API_KEY}"
+```
 
 ## Fallbacks
 
@@ -31,7 +57,7 @@ To minimize latency, Glide falls back right on the first model error to serve a 
 Finally, if the whole model pool is considered unhealthy, Glide resorts to retries with exponential backoff
 optimistically trying to wait a bit to do its best to serve the request.
 
-Retry configuration:
+Retry configuration (located on the router level):
 - `routers.language[].models[].retry.max_retries` (default: 3) - maximum number of retries
 - `routers.language[].models[].retry.base_multiplier` (default: 2) - base multiplier for exponential backoff
 - `routers.language[].models[].retry.min_delay` (default: 2s) - minimum delay between retries
