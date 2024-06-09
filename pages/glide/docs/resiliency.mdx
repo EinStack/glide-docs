@@ -13,5 +13,43 @@ TBU
 
 ## Fallbacks
 
-Fallbacking is a part of [every routing strategy](/glide/docs/routers#routing-strategies) Glide provides.
+Falling back is a part of [every routing strategy](/glide/docs/routers#routing-strategies) Glide provides.
 
+<Important>
+    In order to leverage automatic fallbacks you need to configure a router with a model pool with more than one model.
+    It may be two and more different providers or the same provider deployed into a different regions (e.g. AWS and Azure).
+</Important>
+
+What model to fall back to in any specific case is defined by various factors like:
+- health of each model in a pool (e.g. Glide is not going to fall back to models [considered as unhealthy](#adaptive-health-tracking))
+- routing strategy (e.g. [priority](/glide/docs/routers#priority), [least latency](/glide/docs/routers#least-latency), etc.)
+
+To minimize latency, Glide falls back right on the first model error to serve a given request with a healthy model as soon as possible.
+
+### Retries
+
+Finally, if the whole model pool is considered unhealthy, Glide resorts to retries with exponential backoff
+optimistically trying to wait a bit to do its best to serve the request.
+
+Retry configuration:
+- `routers.language[].models[].retry.max_retries` (default: 3) - maximum number of retries
+- `routers.language[].models[].retry.base_multiplier` (default: 2) - base multiplier for exponential backoff
+- `routers.language[].models[].retry.min_delay` (default: 2s) - minimum delay between retries
+- `routers.language[].models[].retry.max_delay` (default: 5s) - maximum delay between retries
+
+Here is a sample retry configuration:
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: openai
+          retry:
+            max_retries: 3
+            base_multiplier: 2
+            min_delay: "2s"
+            max_delay: "5s"
+          openai:
+            api_key: "${env:OPENAI_API_KEY}"
+```
