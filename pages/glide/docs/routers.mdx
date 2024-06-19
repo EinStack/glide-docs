@@ -4,70 +4,154 @@ description: 'Control Your API Calls'
 ---
 # Routers
 
-Routers are a core concept in Glide. They are most easily thought of a pool of models that execute predefined logic on your API calls.
-There are more details on each router below but first let's look at a simple example.
+Routers are a core concept in the Glide Gateway.
+Each router operates on its own pool of models and decides which model in the pool is going to handle the current request based on additional context like
+model latency over time, [health](/glide/docs/resiliency), which models handed the previous requests, etc.
 
-## Example: Deploy a Resilience Router
-
-A Resilience Router provides failover logic should a target model not be available. Below is a router called `my-chat-router`.
-'my-chat-router' is defined as a `language` router which accesses the `/chat` endpoints for supported providers. Additionally, we've specified this router to
-have a `priority` strategy which implements failover logic.
-
-This router will first try Openai (default model: `gpt-3.5-turbo`) once the router token budget has been drawn down (more info below) the router will failover to
-an Azure OpenAI deployment.
-
-Simple as that! Below we will cover each router in detail.
-
-```yaml
-routers:
-  language:
-    - id: my-chat-router
-      strategy: priority # round-robin, weighted-round-robin, least-latency, priority, etc.
-      models:
-        - id: primary
-          openai:
-            api_key: "XXXXXXXXX"
-        - id: secondary
-          azureopenai:
-            api_key: "XXXXXX"
-            model: "glide-GPT-35"
-            base_url: "https://mydeployment.openai.azure.com/"
-```
+There are four routing strategies available:
+- [Priority](#priority)
+- [Least Latency](#least-latency)
+- [Round-Robin](#round-robin)
+- [Weighted Round-Robin](#weighted-round-robin)
 
 ## Routing Strategies
 
 ### Priority
 
-Unlike other LLM routers, the failover router employs a token bucket based failover strategy to reduce the latency on primary model failure. When a failure occurs, the router directs the API call to the secondary model instead of retrying the primary. **The entire service instance keeps track of the number of failures for a specific model.** Once that number surpasses a certain threshold, the model is "disqualified" from serving requests for a temporary period. This proactive approach involves removing the problematic model from the pool as soon as it experiences issues, ensuring that subsequent requests are handled by healthy models only, significantly improving latency during failover compared to alternative methods.
+The priority routing (also known as failover routing) picks the first [healthy](/glide/docs/resiliency) model in
+the pool in order models are defined in the Glide config.
 
-The router comes with a handy and flexible abstraction called error budget. Error budget is a number of errors you allow to tolerate before calling the model unhealthy and is defined in errors/second. As a final measure the router employs retries with backoff. This is done explicitly only when we have no other choice - such as all configured models are down.
+This is the default routing strategy.
+
+Here is an example of a priority router:
+
+```yaml
+routers:
+  language:
+    - id: default
+      strategy: priority
+      models:
+        - id: openai
+          openai:
+            api_key: "${env:OPENAI_API_KEY}"
+        - id: cohere
+          cohere:
+            api_key: "${env:COHERE_API_KEY}"
+```
+
+The router would always try to serve requests with the `openai` model first.
+If it's not available, then the router will pick the `cohere` model.
+Once the `openai` model is [healthy](/glide/docs/resiliency) again, the router will switch back to it.
 
 ### Least Latency
 
-This router selects the model with the lowest average latency over time. If the least latency model becomes unhealthy, it will pick the second the best, etc.
-Since we don't know the true distribution of model latencies, we attempt to estimate it and keep it updated over time. Over time, old latency data is weighted lower and eventually dropped from the average latency calculation.
-This ensures latencies are constantly updated.
+The least latency routing strategy selects the model with the lowest average latency over time.
+If the least latency model becomes [unhealthy](/glide/docs/resiliency), it will pick the second the best, etc.
+
+Since we don't know the true distribution of model latencies (and it's fairly dynamic thing),
+we attempt to estimate it and keep it updated over time.
+
+The estimation process has two stages:
+- **Warmup**. On this stage, Glide picks each model in [a round-robin manner](#round-robin) and collects latency samples until all models are warmed up
+- **Serving**. Once all models are warmed up, Glide starts serving requests with the least latency model. To be fair to models that happen to have higher latency, Glide updates their latencies periodically.
+
+This is how it looks in the configuration:
+
+```yaml
+routers:
+  language:
+    - id: default
+      strategy: least_latency
+      models:
+        - id: openai
+          latency:
+            decay: 0.06
+            warmup_samples: 3
+            update_interval: 30s
+          openai:
+            api_key: "${env:OPENAI_API_KEY}"
+        - id: cohere
+          latency:
+            decay: 0.06
+            warmup_samples: 3
+            update_interval: 30s
+          cohere:
+            api_key: "${env:COHERE_API_KEY}"
+```
+
+The latency configuration (located on the model item level):
+- `routers.language[].models[].latency.decay` (default: 0.06) - the decay rate of the exponential moving average of the model latency
+- `routers.language[].models[].latency.warmup_samples` (default: 3) - the number of samples to collect before starting to serve the least latency model. The higher number of samples is set the more precise the latency estimation is, but it takes more time to finish the warmup
+- `routers.language[].models[].latency.update_interval` (default: 30s) - the interval to update the model latency
 
 ### Round-Robin
 
-Round-robin routing iterates through a list of models sending the call until a `200` response is returned. This differs from priority as there is no token bucket to track api health across the instance.
+The round-robin routing strategy sends API traffic to each model in the pool in a circular order.
+
+Let's take the following configuration as an example:
+
+```yaml
+routers:
+  language:
+    - id: default
+      strategy: round_robin
+      models:
+        - id: openai
+          openai:
+            api_key: "${env:OPENAI_API_KEY}"
+        - id: cohere
+          cohere:
+            api_key: "${env:COHERE_API_KEY}"
+```
+
+Given that both models are [healthy](/glide/docs/resiliency), requests are going to be processed like this:
+
+- 1st request: `openai`
+- 2nd request: `cohere`
+- 3rd request: `openai`
+- 4th request: `cohere`
+- etc.
 
 ### Weighted Round-Robin
 
-Weighted round-robin sends API traffic proportional to the weight assigned in the `config.yaml`.
+Weighted round-robin routing strategy sends requests proportionally to
+the weights assigned models in a pool.
 
-In the below example 80% of traffic will be served to Model A with 10% sent each to Model B and Model C.
-
-```yaml
-Model A: 0.8
-Model B: 0.1
-Model C: 0.1
-```
-
-If Model A is unhealthy the traffic will be split equally between Model B and Model C. Once Model A is healthy again, the original default weights will be implemented.
+For example, let's have a look at this configuration:
 
 ```yaml
-Model A: 0.0 # unhealthy
-Model B: 0.5
-Model C: 0.5
+routers:
+  language:
+    - id: default
+      strategy: weighted_round_robin
+      models:
+        - id: openai
+          weight: 0.8 # 80% of traffic
+          openai:
+            api_key: "${env:OPENAI_API_KEY}"
+        - id: cohere
+          weight: 0.1 # 10% of traffic
+          cohere:
+            api_key: "${env:COHERE_API_KEY}"
+        - id: cohere
+          weight: 0.1 # 10% of traffic
+          anthropic:
+            api_key: "${env:ANTHROPIC_API_KEY}"
 ```
+
+In this case, traffic will be split as follows if all models are [healthy](/glide/docs/resiliency):
+
+- 80% of traffic will be sent to the `openai` model
+- 10% of traffic will be sent to the `cohere` model
+- 10% of traffic will be sent to the `anthropic` model
+
+Now, if one of the model is fallen out of the pool, the remaining models are going to be reweighed according to [healthy](/glide/docs/resiliency) model weights.
+In this example, if the `openai` model gets down, the traffic will be split equally between `cohere` and `anthropic` models because they have equal weights
+as they were configured like this:
+
+- `openai`: 0% (unhealthy)
+- `cohere`: 50% of traffic
+- `anthropic`: 50% of traffic
+
+The weight configuration (located on the model item level):
+- `routers.language[].models[].weight` (default: 1) - the weight of the model in the pool. Doesn't have to be in 0-1 interval or add up to 1.
