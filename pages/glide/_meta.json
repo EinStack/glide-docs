@@ -2,5 +2,9 @@
   "docs": {
     "type": "page",
     "title": "Docs"
+  },
+  "guides": {
+    "type": "page",
+    "title": "Guides"
   }
 }

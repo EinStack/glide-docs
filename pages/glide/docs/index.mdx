@@ -6,8 +6,11 @@ description: Welcome to the Glide's documentation - The Cloud Native LLM Gateway
 
 ## 🐦 What is Glide?
 
-Glide is a lightweight blazing-fast cloud-native [open-source](https://opensource.com/resources/what-open-source) LLM gateway, delivering high-performance LLMOps in one single binary.
-Glide provides a simplified way to build application resilience, reduce latency, and manage API keys among many other features.
+Glide is a cloud-native [open-source](https://opensource.com/resources/what-open-source) LLM gateway, delivering high-performance LLMOps in one single binary.
+
+The idea of Glide is to take away common functionality needed during communication with LLMs and building GenAI applications on a level of a separate service.
+That way you don't have to put that pile of logic into your applications and just seamlessly utilize it via Glide.
+So you can focus on building your core business logic and solve common concerns via configuring Glide.
 
 <img className="w-full" src="/images/glide/marketecture.svg" alt="The Glide's Architecture" />
 
@@ -45,9 +48,9 @@ Glide provides a simplified way to build application resilience, reduce latency,
     </Card>
     <Card
         icon="plug"
-        title="No Vendor Lock-Ins"
+        title="Unified LLM API"
     >
-        Switch your model providers seamlessly for your application without a need to modify them.
+        Switch your model providers seamlessly without a need to modify your applications.
     </Card>
     <Card
         icon="people-group"
@@ -62,7 +65,7 @@ Glide provides a simplified way to build application resilience, reduce latency,
 - **Unified API**: Change your model providers without a need to modify your applications
 - **High Performance**: Written in [Golang](https://go.dev/) with the best practices of software development in a cloud-native environments in mind
 - Flexible **routing** across several models and various strategies like [the least latency](/essentials/routers#least-latency-router), [weighted round-robin](http://localhost:3000/essentials/routers#weighted-round-robin-router), [round-robin](http://localhost:3000/essentials/routers#round-robin-router), [priority-based routing](/essentials/routers#priority-router). All strategies include **low-latency fallback mechanisms** to ensure resiliency
-- Support [Popular LLM providers](/essentials/providers)
+- Support [popular LLM providers](/essentials/providers)
 - **Centralized** configuration and API key management
 - **Production-ready Observability**: Always know what's going on with the heart of your system via logs, metrics, and traces. [OpenTelemetry](https://opentelemetry.io/) is natively supported (coming soon).
 - and [much more is coming](https://github.com/EinStack/glide/blob/develop/ROADMAP.md)
@@ -84,7 +87,7 @@ Glide provides a simplified way to build application resilience, reduce latency,
         color="#0078d3"
         href="/installation/local/"
     >
-        Install Glide locally into your developer machine or bare metal setup via CLI (MacOS, Linux)
+        Install Glide locally into your developer machine or bare metal setup via CLI (MacOS, Linux, Windows)
     </Card>
     <Card
         icon="cloud"

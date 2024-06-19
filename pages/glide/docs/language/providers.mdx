@@ -1,0 +1,221 @@
+---
+title: 'Providers'
+description: 'Supported Language Providers'
+---
+# Providers
+
+Here is a list of supported language providers:
+- [OpenAI](#openai)
+- [Azure OpenAI](#azure-openai)
+- [Anthropic](#anthropic)
+- [Cohere](#cohere)
+- [AWS Bedrock](#aws-bedrock)
+- [OctoML](#octoml)
+- [Ollama](#ollama)
+- [more coming](https://github.com/EinStack/glide/issues?q=is:issue+is:open+label:model:language)
+
+## OpenAI
+
+[OpenAI](https://openai.com/) is a super popular LLM provider that basically created the GenAI movement.
+
+Below is an example OpenAI provider config:
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: openai
+          openai:
+            base_url: https://api.openai.com/v1
+            chat_endpoint: /chat/completions
+            model: gpt-3.5-turbo
+            api_key: <YOUR API KEY>
+            default_params:
+                temperature: 0.8
+                top_p: 1
+                max_tokens: 100
+                n: 1
+                frequency_penalty: 0
+                presence_penalty: 0
+                seed: 42
+```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/openai/config.go#L9)
+
+## Azure OpenAI
+
+[Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/) is an Azure-hosted version of OpenAI models.
+
+Below is an example Azure OpenAI provider config:
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: azureopenai
+          azureopenai:
+            base_url: <YOUR AZURE ENDPOINT>
+            chat_endpoint: /chat/completions
+            api_version: "2023-05-15"
+            model: gpt-3.5-turbo
+            api_key: <YOUR API KEY>
+            default_params:
+                temperature: 0.8
+                top_p: 1
+                max_tokens: 100
+                n: 1
+                frequency_penalty: 0
+                presence_penalty: 0
+                seed: 42
+```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/azureopenai/config.go#L9)
+
+## Anthropic
+
+<Warning>
+    Anthropic has not yet integrated with the streaming chat API.
+</Warning>
+
+[Anthropic](https://www.anthropic.com/)
+
+Below is an example Anthropic provider config:
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: anthropic
+          anthropic:
+            base_url: https://api.anthropic.com/v1
+            api_version: "2023-06-01"
+            chat_endpoint: /messages
+            model: claude-instant-1.2
+            api_key: <YOUR API KEY>
+            default_params:
+                system: You are a helpful assistant.
+                temperature: 1
+                max_tokens: 250
+```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/anthropic/config.go#L9)
+
+## Cohere
+
+[Cohere](https://cohere.com/) is another popular LLM provider that has a great low latency models.
+
+Here is an example Cohere configuration:
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: cohere
+          cohere:
+            base_url: https://api.cohere.ai/v1
+            chat_endpoint: /chat
+            model: command-light
+            api_key: <YOUR API KEY>
+            default_params:
+                temperature: 0.3
+                p: 0.75
+```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/cohere/config.go#L9)
+
+## AWS Bedrock
+
+<Warning>
+    Bedrock has not yet integrated with the streaming chat API.
+</Warning>
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: cohere
+          bedrock:
+            base_url: <YOUR AWS ENDPOINT>
+            chat_endpoint: /model
+            model: amazon.titan-text-express-v1
+            api_key: <YOUR API KEY>
+            access_key: <YOUR ACCESS KEY>
+            secret_key: <YOUR SECRET KEY>
+            aws_region: <YOUR REGION>
+            default_params:
+                temperature: 0
+                top_p: 1
+                max_tokens: 512
+                stop_sequences: []
+```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/bedrock/config.go#L9)
+
+## OctoML
+
+<Warning>
+    OctoML has not yet integrated with the streaming chat API.
+</Warning>
+
+[OctoML](https://octo.ai/) the default_params and model name for OctoML. Specify override values in the `config.yaml` file.
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: octoml
+          octoml:
+            base_url: https://text.octoai.run/v1
+            chat_endpoint: /chat/completions
+            model: mistral-7b-instruct-fp16
+            api_key: <YOUR API KEY>
+            default_params:
+                temperature: 1
+                top_p: 1
+                max_tokens: 100
+
+```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/octoml/config.go#L9)
+
+## Ollama
+
+<Warning>
+    Ollama has not yet integrated with the streaming chat API.
+</Warning>
+
+[Ollama](https://ollama.com/) is a great way to serve Open Source LLMs locally and beyond.
+
+Here is an example Ollama configuration:
+
+```yaml
+routers:
+  language:
+    - id: default
+      models:
+        - id: ollama
+          ollama:
+            base_url: http://localhost:11434
+            chat_endpoint: /api/chat
+            model: llama3
+            default_params:
+                temperature: 0.8
+                top_p: 0.9
+                num_ctx: 2048
+                top_k: 40
+```
+
+Here is a list of all supported provider model params:
+- [Github](https://github.com/EinStack/glide/blob/main/pkg/providers/ollama/config.go#L5)

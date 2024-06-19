@@ -1,10 +1,7 @@
 {
   "glide": {
+    "display": "hidden",
     "type": "page",
     "title": "Glide"
-  },
-  "redrock": {
-    "type": "page",
-    "title": "RedRock"
   }
 }
